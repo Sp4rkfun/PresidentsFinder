@@ -17,5 +17,13 @@ public class Page {
 		for(Element anchor: anchors){
 			System.out.println(anchor.attr("href"));
 		}
+		Elements ps = doc.select("p");
+		for(Element p: ps){
+			System.out.println(p.text());
+		}
+		Elements lis = doc.select("li");
+		for(Element li: lis){
+			System.out.println(li.text());
+		}
 	}
 }
