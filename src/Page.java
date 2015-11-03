@@ -7,28 +7,25 @@ import org.jsoup.select.Elements;
 public class Page {
 	public ArrayList<String> links=new ArrayList<String>();
 	public String name;
+	public String content="";
 	public Page(String name,Document doc){
 		this.name=name;
 		Elements links = doc.select("link");
 		for(Element link: links){
-			System.out.println(link.attr("href"));
+			this.links.add(link.attr("href"));
 		}
 		Elements anchors = doc.select("a");
 		for(Element anchor: anchors){
-			System.out.println(anchor.attr("href"));
+			this.links.add(anchor.attr("href"));
 		}
-		Elements ps = doc.select("p");
+		Elements ps = doc.select("p,li,h1,h2,h3,h4");
 		for(Element p: ps){
-			System.out.println(p.text());
-		}
-		Elements lis = doc.select("li");
-		for(Element li: lis){
-			System.out.println(li.text());
+			this.content += p.text();
 		}
 		Elements divs = doc.select("div:not(:has(div))");
 		for(Element div: divs){
 			String text = div.text();
-			System.out.println(div.text().trim());
+			this.content+=div.text().trim();
 		}
 	}
 }
