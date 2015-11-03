@@ -24,11 +24,11 @@ public class main {
 			String name = title.text();
 			Pattern p = Pattern.compile(" -");
 			Matcher m = p.matcher(name);
-			if(m.find())System.out.println(name.substring(0,m.start()));
-			Elements divs = doc.select("div");
+			if(m.find())new Page(name.substring(0,m.start()),doc);
+	/*		Elements divs = doc.select("div");
 			for(Element e:divs){
 				System.out.println(e.text());
-			}
+			}*/
 		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
