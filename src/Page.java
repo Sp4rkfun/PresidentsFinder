@@ -25,5 +25,10 @@ public class Page {
 		for(Element li: lis){
 			System.out.println(li.text());
 		}
+		Elements divs = doc.select("div:not(:has(div))");
+		for(Element div: divs){
+			String text = div.text();
+			System.out.println(div.text().trim());
+		}
 	}
 }
