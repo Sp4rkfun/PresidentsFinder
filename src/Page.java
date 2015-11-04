@@ -19,6 +19,7 @@ public class Page {
 	private HashMap<String, MutableInt> hitList = new HashMap<String, MutableInt>();
 	private MaxentTagger tagger;
 	public int documentSize = 0;
+	public double score = -1;
 	
 	public Page(String name,Document doc, MaxentTagger inputTagger){
 		this.name=name;
@@ -51,7 +52,7 @@ public class Page {
 				}
 				if(taggedWord.length() < 2) continue;
 				String[] wordAndTag = taggedWord.split("_");
-				String word = wordAndTag[0].trim();
+				String word = wordAndTag[0].trim().toLowerCase();
 				if(this.tags.contains(wordAndTag[1])) {
 					if(nextWord.contains("POS")) {
 						addHit(word + nextWord.split("_")[0]);
@@ -70,7 +71,7 @@ public class Page {
 		if(this.hitList.containsKey(word)) {
 			this.hitList.get(word).incrementVal();
 		} else {
-			this.hitList.put(word, new MutableInt(1));
+			this.hitList.put(word.toLowerCase(), new MutableInt(1));
 		}
 		this.documentSize++;
 	}

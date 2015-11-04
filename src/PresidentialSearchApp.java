@@ -1,3 +1,4 @@
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class PresidentialSearchApp {
@@ -14,10 +15,13 @@ public class PresidentialSearchApp {
 			if(input.equals("quit")) {
 				break;
 			}
-			for (String term : input.trim().split("\\s+")) {
-				System.out.println(term);
+			PriorityQueue<Page> hits = finder.find(input);
+			int hitCount = 10;
+			while(!hits.isEmpty() && hitCount > 0) {
+				Page hit = hits.poll();
+				System.out.println("Document: " + hit.getName() + " score: " + hit.score);
+				hitCount--;
 			}
-			
 		}
 		scanner.close();
 	}
