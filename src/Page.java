@@ -17,15 +17,17 @@ public class Page {
 	private ArrayList<String> tags = new ArrayList<String>();
 	private String nonTags = ", . .$$. `` '' : $ # -LRB- -RRB-";
 	private HashMap<String, MutableInt> hitList = new HashMap<String, MutableInt>();
+	private MaxentTagger tagger;
 	
-	public Page(String name,Document doc){
+	
+	public Page(String name,Document doc, MaxentTagger inputTagger){
 		this.name=name;
-		MaxentTagger tagger = new MaxentTagger("taggers/english-left3words-distsim.tagger");
+		this.tagger = inputTagger;
 		int index = 0;
 		while(index < 46) {
-			String tag = tagger.getTag(index);
+			String tag = this.tagger.getTag(index);
 			if(!nonTags.contains(tag)) {
-				tags.add(tagger.getTag(index));
+				tags.add(this.tagger.getTag(index));
 			}
 			index++;
 		}
@@ -37,7 +39,7 @@ public class Page {
 		Elements ps = doc.select("p,li,h1,h2,h3,h4");
 		for(Element p: ps){
 			String sentence = p.text().trim();
-			String tagged = tagger.tagString(sentence);
+			String tagged = this.tagger.tagString(sentence);
 			String[] taggedWords = tagged.split("\\s+");
 			for(int i = 0; i < taggedWords.length; i++) {
 				String taggedWord = taggedWords[i];
