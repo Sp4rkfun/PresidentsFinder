@@ -13,13 +13,14 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public class PageFinder {
 	ArrayList<Page> pages = new ArrayList<Page>();
-
+	public double avgDocLength;
 	public PageFinder() {
 		// StanfordCoreNLP pipeline = new StanfordCoreNLP();
 		File folder = new File("docs");
 		File[] files = folder.listFiles();
 		MaxentTagger tagger = new MaxentTagger("taggers/english-left3words-distsim.tagger");
 		try {
+			int cumDocLength = 0;
 			for (File file : files) {
 				Document doc = Jsoup.parse(file, "ISO-8859-1");
 				Element title = doc.select("title").first();
@@ -30,12 +31,14 @@ public class PageFinder {
 				if (m.find()) {
 					Page page = new Page(name.substring(0, m.start()), doc, tagger);
 					pages.add(page);
+					cumDocLength+=page.documentSize;
 				}
 				/*
 				 * Elements divs = doc.select("div"); for(Element e:divs){
 				 * System.out.println(e.text()); }
 				 */
 			}
+			avgDocLength=(double)cumDocLength/files.length;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
