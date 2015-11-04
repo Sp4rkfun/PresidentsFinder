@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,6 +68,12 @@ public class PageFinder {
 				hits.add(page);
 		}
 		return hits;
+	}
+	
+	public PriorityQueue<String> find(String query) {
+		PriorityQueue<String> scoredPages = new PriorityQueue<String>();
+		ArrayList<Page> relevantPages = getHits(query.split("\\s+"));
+		return null;
 	}
 
 	public static double idf(int docs, int contains) {
