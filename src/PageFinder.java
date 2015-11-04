@@ -14,6 +14,7 @@ import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 public class PageFinder {
 	ArrayList<Page> pages = new ArrayList<Page>();
 	public double avgDocLength;
+	private HashMap<String, MutableInt> numOccurrences;
 	public PageFinder() {
 		// StanfordCoreNLP pipeline = new StanfordCoreNLP();
 		File folder = new File("docs");
@@ -47,14 +48,20 @@ public class PageFinder {
 
 	public ArrayList<Page> getHits(String[] words) {
 		ArrayList<Page> hits = new ArrayList<Page>();
+		this.numOccurrences = new HashMap<String, MutableInt>();
 		for (Page page : pages) {
 			boolean passed = true;
 			for (String word : words) {
 				if (!page.getHitList().containsKey(word)) {
 					passed = false;
 					break;
+				} else {
+					if(this.numOccurrences.containsKey(word)) {
+						this.numOccurrences.get(word).incrementVal();
+					} else {
+						this.numOccurrences.put(word, new MutableInt(1));
+					}
 				}
-
 			}
 			if (passed)
 				hits.add(page);
