@@ -40,21 +40,22 @@ public class Page {
 			String tagged = tagger.tagString(sentence);
 			String[] taggedWords = tagged.split("\\s+");
 			for(int i = 0; i < taggedWords.length; i++) {
-				String word = taggedWords[i];
+				String taggedWord = taggedWords[i];
 				String nextWord = null;
 				if(i < taggedWords.length-1) {
 					nextWord = taggedWords[i+1];
 				} else {
 					nextWord = "";
 				}
-				if(word.length() < 2) continue;
-				String[] wordAndTag = word.split("_");
+				if(taggedWord.length() < 2) continue;
+				String[] wordAndTag = taggedWord.split("_");
+				String word = wordAndTag[0].trim();
 				if(this.tags.contains(wordAndTag[1])) {
 					if(nextWord.contains("POS")) {
-						addHit(wordAndTag[0].trim() + nextWord.split("_")[0]);
+						addHit(word + nextWord.split("_")[0]);
 					} else {
-						if(!wordAndTag[0].contains("?")) {
-							addHit(wordAndTag[0]);
+						if(!word.contains("?")) {
+							addHit(word);
 						}
 					}
 				} 
