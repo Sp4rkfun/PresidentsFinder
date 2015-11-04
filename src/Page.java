@@ -18,7 +18,7 @@ public class Page {
 	private String nonTags = ", . .$$. `` '' : $ # -LRB- -RRB-";
 	private HashMap<String, MutableInt> hitList = new HashMap<String, MutableInt>();
 	private MaxentTagger tagger;
-	
+	public int documentSize = 0;
 	
 	public Page(String name,Document doc, MaxentTagger inputTagger){
 		this.name=name;
@@ -72,6 +72,7 @@ public class Page {
 		} else {
 			this.hitList.put(word, new MutableInt(1));
 		}
+		this.documentSize++;
 	}
 	
 	public HashMap<String, MutableInt> getHitList() {
