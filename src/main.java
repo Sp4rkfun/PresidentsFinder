@@ -19,7 +19,7 @@ public class main {
 		File[] files = folder.listFiles();
 		try {
 		for(File file:files){
-			Document doc = Jsoup.parse(file,"ASCII");
+			Document doc = Jsoup.parse(file,"ISO-8859-1");
 			Element title = doc.select("title").first();
 			String name = title.text();
 			Pattern p = Pattern.compile(" -");
