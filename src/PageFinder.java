@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +12,8 @@ import org.jsoup.nodes.Element;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public class PageFinder {
+	ArrayList<Page> pages = new ArrayList<Page>();
+
 	public PageFinder() {
 		// StanfordCoreNLP pipeline = new StanfordCoreNLP();
 		File folder = new File("docs");
@@ -23,11 +26,11 @@ public class PageFinder {
 				String name = title.text();
 				Pattern p = Pattern.compile(" -");
 				Matcher m = p.matcher(name);
+
 				if (m.find()) {
 					Page page = new Page(name.substring(0, m.start()), doc, tagger);
-					HashMap<String, MutableInt> hitList = page.getHitList();
+					pages.add(page);
 				}
-
 				/*
 				 * Elements divs = doc.select("div"); for(Element e:divs){
 				 * System.out.println(e.text()); }
@@ -38,7 +41,24 @@ public class PageFinder {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public ArrayList<Page> getHits(String[] words) {
+		ArrayList<Page> hits = new ArrayList<Page>();
+		for (Page page : pages) {
+			boolean passed = true;
+			for (String word : words) {
+				if (!page.getHitList().containsKey(word)) {
+					passed = false;
+					break;
+				}
+
+			}
+			if (passed)
+				hits.add(page);
+		}
+		return hits;
+	}
+
 	public static double idf(int docs, int contains) {
 		return Math.log((docs - contains + 0.5) / (contains + 0.5));
 	}

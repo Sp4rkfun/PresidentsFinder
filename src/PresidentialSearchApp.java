@@ -17,6 +17,7 @@ public class PresidentialSearchApp {
 			for (String term : input.trim().split("\\s+")) {
 				System.out.println(term);
 			}
+			
 		}
 		scanner.close();
 	}

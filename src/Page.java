@@ -77,6 +77,9 @@ public class Page {
 	public HashMap<String, MutableInt> getHitList() {
 		return this.hitList;
 	}
+	public boolean hasWord(String word){
+		return hitList.containsKey(word);
+	}
 }
 
 class MutableInt {
